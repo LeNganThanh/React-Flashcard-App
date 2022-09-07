@@ -1,38 +1,60 @@
-.App {
+body {
+  background-color: gray;
+}
+.card {
+  padding: 2rem;
+  margin: 3rem auto;
+  width: 40rem;
+  height: 70vh;
+  background-color: whitesmoke;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+table {
+  width: 90%;
+  margin: 2rem auto;
+  border-collapse: collapse;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+tr,
+th,
+td {
+  border: 1px solid gray;
+  padding: 10px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.deleteBtn {
+  padding: 5px 10px;
+  background-color: gainsboro;
+  border-radius: 5px;
+}
+.deleteBtn:hover {
+  box-shadow: 2px 2px 10px gray;
+}
+input,
+button {
+  font-size: 1rem;
+  padding: 5px 10px;
+  margin: 3px 7px;
+}
+input {
+  width: 30%;
+}
+button {
+  padding: 5px 20px;
+}
+button:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+hr {
+  margin: 2rem auto;
+  width: 30vw;
+  height: 1px;
+  border: 1px solid black;
+}
+.cardViewer {
+  display: grid;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  height: 50%;
+  width: 60%;
+  border: 2px solid black;
+  margin: 2rem auto;
 }
