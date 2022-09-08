@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from "react";
 import "../App.css";
-import CardViewer from "./Card.viewer";
 import { nanoid } from "nanoid";
 import EditCard from "./Edit.card";
 import ReadOnlyCard from "./ReadOnly.card";
@@ -20,7 +19,7 @@ export default function CardEditor({ click, data }) {
   });
 
   //Execute the new data enter
-  function handleValChange(e) {
+  const handleValChange = e => {
     e.preventDefault();
     const fieldName = e.target.getAttribute("name");
     const fieldVal = e.target.value;
@@ -29,9 +28,9 @@ export default function CardEditor({ click, data }) {
     newFormData[fieldName] = fieldVal;
 
     setAddFormData(newFormData);
-  }
+  };
 
-  function handleAddCard(e) {
+  const handleAddCard = e => {
     e.preventDefault();
     const newData = {
       id: nanoid(),
@@ -41,10 +40,10 @@ export default function CardEditor({ click, data }) {
     };
     const newDatas = [...row, newData];
     setRow(newDatas);
-  }
+  };
 
   //Execute the editing the old data
-  function handleEditCard(e, row) {
+  const handleEditCard = (e, row) => {
     e.preventDefault();
     setEditRowId(row.id);
 
@@ -54,10 +53,10 @@ export default function CardEditor({ click, data }) {
       delete: "Delete",
     };
     setEditRowForm(formVal);
-  }
+  };
 
   //Get the new value from input field
-  function handleEditCardChange(e) {
+  const handleEditCardChange = e => {
     e.preventDefault();
     const fieldName = e.target.getAttribute("name");
     const fieldVal = e.target.value;
@@ -66,9 +65,9 @@ export default function CardEditor({ click, data }) {
     newFormData[fieldName] = fieldVal;
 
     setEditRowForm(newFormData);
-  }
+  };
 
-  function handleEditCardSubmit(e) {
+  const handleEditCardSubmit = e => {
     e.preventDefault();
     const editRow = {
       id: editRowId,
@@ -83,18 +82,18 @@ export default function CardEditor({ click, data }) {
 
     setRow(newRow);
     setEditRowId(null);
-  }
-  function handleCancelEdit() {
+  };
+  const handleCancelEdit = () => {
     setEditRowId(null);
-  }
+  };
   //execute the delete
-  function handleDeleteBtn(cardId) {
+  const handleDeleteBtn = cardId => {
     const newDatas = [...row];
     const idx = row.findIndex(cardRow => row.id === cardId);
     newDatas.splice(idx, 1);
 
     setRow(newDatas);
-  }
+  };
 
   const TABLE = (
     <div>

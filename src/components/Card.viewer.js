@@ -18,7 +18,6 @@ export default function CardViewer({ click, view }) {
       </div>
       <button onClick={getToNextCard}>Next Card</button>
       <hr />
-      {/* <button>Edit card</button> */}
       <button onClick={click}>Go to editor</button>
     </div>
   );
