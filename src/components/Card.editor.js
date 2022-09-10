@@ -88,31 +88,35 @@ export default function CardEditor({
       <form onSubmit={handleEditFormSubmit}>
         <table>
           <thead>
-            <tr key={nanoid}>
+            <tr>
               <th>Front</th>
               <th>Back</th>
               <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            {cards.map((card, id) => (
-              <Fragment>
-                {editRowId === id ? (
-                  <EditCard
-                    editFormData={editFormData}
-                    handleEditFormChange={handleEditFormChange}
-                    handleCancelEdit={handleCancelEdit}
-                  />
-                ) : (
-                  <ReadOnlyCard
-                    card={card}
-                    removeCard={removeCard}
-                    id={id}
-                    handleEditClick={handleEditClick}
-                  />
-                )}
-              </Fragment>
-            ))}
+            {React.Children.toArray(
+              cards.map((card, id) => (
+                <Fragment>
+                  {editRowId === id ? (
+                    <EditCard
+                      editFormData={editFormData}
+                      handleEditFormChange={handleEditFormChange}
+                      handleCancelEdit={handleCancelEdit}
+                      key={id}
+                    />
+                  ) : (
+                    <ReadOnlyCard
+                      key={id}
+                      card={card}
+                      removeCard={removeCard}
+                      id={id}
+                      handleEditClick={handleEditClick}
+                    />
+                  )}
+                </Fragment>
+              ))
+            )}
           </tbody>
         </table>
       </form>

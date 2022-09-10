@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-//import CardEditor from "./Card.editor";
 
 export default function CardViewer({ switchMode, cards }) {
   const [current, setCurrent] = useState(0);
