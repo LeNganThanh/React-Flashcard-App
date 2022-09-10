@@ -5,12 +5,12 @@ import CardViewer from "./components/Card.viewer";
 import dataTable from "./mock-data.json";
 
 function App() {
-  const [isOn, setIsOn] = useState(true);
+  const [isEditor, setIsOn] = useState(true);
   const [cards, setCards] = useState(dataTable);
 
   //the switch between 2 component
   const switchMode = () => {
-    setIsOn(isOn => !isOn);
+    setIsOn(isEditor => !isEditor);
   };
 
   // adding new card
@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div className="App">
-      {isOn ? (
+      {isEditor ? (
         <CardEditor
           switchMode={switchMode}
           cards={cards}
