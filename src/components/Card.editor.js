@@ -1,8 +1,7 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import "../App.css";
 import { nanoid } from "nanoid";
 import EditCard from "./Edit.card";
-import ReadOnlyCard from "./ReadOnly.card";
 
 export default function CardEditor({ click, data }) {
   const [row, setRow] = useState(data);
@@ -11,15 +10,13 @@ export default function CardEditor({ click, data }) {
     back: "",
     delete: "Delete",
   });
-  const [editRowId, setEditRowId] = useState(null);
-  const [editRowForm, setEditRowForm] = useState({
-    front: "",
-    back: "",
-    delete: "Delete",
-  });
 
+<<<<<<< HEAD
   //Execute the new data enter
   const handleValChange = e => {
+=======
+  function handleValChange(e) {
+>>>>>>> parent of 4a67aea... viewer card still has no Edit
     e.preventDefault();
     const fieldName = e.target.getAttribute("name");
     const fieldVal = e.target.value;
@@ -28,9 +25,14 @@ export default function CardEditor({ click, data }) {
     newFormData[fieldName] = fieldVal;
 
     setAddFormData(newFormData);
+<<<<<<< HEAD
   };
 
   const handleAddCard = e => {
+=======
+  }
+  function handleAddCard(e) {
+>>>>>>> parent of 4a67aea... viewer card still has no Edit
     e.preventDefault();
     const newData = {
       id: nanoid(),
@@ -40,6 +42,7 @@ export default function CardEditor({ click, data }) {
     };
     const newDatas = [...row, newData];
     setRow(newDatas);
+<<<<<<< HEAD
   };
 
   //Execute the editing the old data
@@ -88,45 +91,48 @@ export default function CardEditor({ click, data }) {
   };
   //execute the delete
   const handleDeleteBtn = cardId => {
+=======
+  }
+  function handleDeleteBtn(cardId) {
+>>>>>>> parent of 4a67aea... viewer card still has no Edit
     const newDatas = [...row];
     const idx = row.findIndex(cardRow => row.id === cardId);
     newDatas.splice(idx, 1);
 
     setRow(newDatas);
+<<<<<<< HEAD
   };
 
+=======
+  }
+>>>>>>> parent of 4a67aea... viewer card still has no Edit
   const TABLE = (
     <div>
-      <form onSubmit={handleEditCardSubmit}>
-        <table>
-          <thead>
+      <table>
+        <thead>
+          <tr>
+            <th>Front</th>
+            <th>Back</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {row.map(rowData => (
             <tr>
-              <th>Front</th>
-              <th>Back</th>
-              <th>Delete</th>
+              <td>{rowData.front}</td>
+              <td>{rowData.back}</td>
+              <td>
+                <button
+                  className="deleteBtn"
+                  onClick={() => handleDeleteBtn(row.id)}
+                >
+                  {rowData.delete}
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {row.map((rowData, idx) => (
-              <Fragment>
-                {editRowId === idx ? (
-                  <EditCard
-                    editRowForm={editRowForm}
-                    handleEditCardChange={handleEditCardChange}
-                    handleCancelEdit={handleCancelEdit}
-                  />
-                ) : (
-                  <ReadOnlyCard
-                    row={rowData}
-                    handleDeleteBtn={handleDeleteBtn}
-                    handleEditCard={handleEditCard}
-                  />
-                )}
-              </Fragment>
-            ))}
-          </tbody>
-        </table>
-      </form>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 
@@ -155,24 +161,8 @@ export default function CardEditor({ click, data }) {
   );
 }
 /* 
-using an external edit component
+using an extra edit component
 {row.map((rowData)=>(
     <EditCard row={rowData} handleDeleteBtn={handleDeleteBtn}/>
 ))}
-
-//inside code
-          {row.map(rowData => (
-            <tr>
-              <td>{rowData.front}</td>
-              <td>{rowData.back}</td>
-              <td>
-                <button
-                  className="deleteBtn"
-                  onClick={() => handleDeleteBtn(row.id)}
-                >
-                  {rowData.delete}
-                </button>
-              </td>
-            </tr>
-          ))}
 */

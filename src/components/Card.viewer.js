@@ -9,7 +9,6 @@ export default function CardViewer({ click, view }) {
   function getToNextCard() {
     step < view.length - 1 ? setStep(step => step + 1) : setStep(0);
   }
-
   return (
     <div className="card">
       <h1>Card Viewer</h1>
