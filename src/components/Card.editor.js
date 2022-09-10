@@ -1,168 +1,137 @@
 import React, { useState } from "react";
 import "../App.css";
+import { Fragment } from "react";
 import { nanoid } from "nanoid";
 import EditCard from "./Edit.card";
+import ReadOnlyCard from "./ReadOnly.card";
 
-export default function CardEditor({ click, data }) {
-  const [row, setRow] = useState(data);
-  const [addFormData, setAddFormData] = useState({
+export default function CardEditor({
+  switchMode,
+  cards,
+  addCard,
+  removeCard,
+  editDataSubmit,
+}) {
+  const [front, setFront] = useState(""); //front card
+  const [back, setBack] = useState(""); //back card
+
+  const [editRowId, setEditRowId] = useState(null); //get row id for update the edit
+  const [editFormData, setEditFormData] = useState({
     front: "",
     back: "",
-    delete: "Delete",
-  });
+  }); //handle the changing data in the row
 
-<<<<<<< HEAD
-  //Execute the new data enter
-  const handleValChange = e => {
-=======
-  function handleValChange(e) {
->>>>>>> parent of 4a67aea... viewer card still has no Edit
+  //handle input changing by adding data
+  const handleChange = e => {
+    e.preventDefault();
+    const inputName = e.target.getAttribute("name");
+    if (inputName === "front") {
+      setFront(e.target.value);
+    } else {
+      setBack(e.target.value);
+    }
+  };
+
+  //adding the data
+  const createCard = () => {
+    addCard({
+      front,
+      back,
+    });
+    setBack("");
+    setFront("");
+  };
+
+  //execute the editing
+  const handleEditFormChange = e => {
     e.preventDefault();
     const fieldName = e.target.getAttribute("name");
     const fieldVal = e.target.value;
 
-    const newFormData = { ...addFormData };
+    const newFormData = { ...editFormData };
     newFormData[fieldName] = fieldVal;
-
-    setAddFormData(newFormData);
-<<<<<<< HEAD
+    setEditFormData(newFormData);
   };
 
-  const handleAddCard = e => {
-=======
-  }
-  function handleAddCard(e) {
->>>>>>> parent of 4a67aea... viewer card still has no Edit
+  const handleEditClick = (e, card) => {
     e.preventDefault();
-    const newData = {
-      id: nanoid(),
-      front: addFormData.front,
-      back: addFormData.back,
-      delete: addFormData.delete,
-    };
-    const newDatas = [...row, newData];
-    setRow(newDatas);
-<<<<<<< HEAD
-  };
-
-  //Execute the editing the old data
-  const handleEditCard = (e, row) => {
-    e.preventDefault();
-    setEditRowId(row.id);
+    setEditRowId(card.id);
 
     const formVal = {
-      front: row.front,
-      back: row.back,
-      delete: "Delete",
+      front: card.front,
+      back: card.back,
     };
-    setEditRowForm(formVal);
+    setEditFormData(formVal);
   };
 
-  //Get the new value from input field
-  const handleEditCardChange = e => {
+  const handleEditFormSubmit = e => {
     e.preventDefault();
-    const fieldName = e.target.getAttribute("name");
-    const fieldVal = e.target.value;
-
-    const newFormData = { ...editRowForm };
-    newFormData[fieldName] = fieldVal;
-
-    setEditRowForm(newFormData);
-  };
-
-  const handleEditCardSubmit = e => {
-    e.preventDefault();
-    const editRow = {
-      id: editRowId,
-      front: editRowForm.front,
-      back: editRowForm.back,
-      delete: "Delete",
+    const editedCard = {
+      front: editFormData.front,
+      back: editFormData.back,
     };
 
-    const newRow = [...row];
-    const idx = row.findIndex(row => row.id === editRowId);
-    newRow[idx] = editRow;
-
-    setRow(newRow);
-    setEditRowId(null);
+    editDataSubmit(editRowId, editedCard);
+    setEditRowId("");
   };
+
   const handleCancelEdit = () => {
-    setEditRowId(null);
+    setEditRowId("");
   };
-  //execute the delete
-  const handleDeleteBtn = cardId => {
-=======
-  }
-  function handleDeleteBtn(cardId) {
->>>>>>> parent of 4a67aea... viewer card still has no Edit
-    const newDatas = [...row];
-    const idx = row.findIndex(cardRow => row.id === cardId);
-    newDatas.splice(idx, 1);
-
-    setRow(newDatas);
-<<<<<<< HEAD
-  };
-
-=======
-  }
->>>>>>> parent of 4a67aea... viewer card still has no Edit
-  const TABLE = (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Front</th>
-            <th>Back</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {row.map(rowData => (
-            <tr>
-              <td>{rowData.front}</td>
-              <td>{rowData.back}</td>
-              <td>
-                <button
-                  className="deleteBtn"
-                  onClick={() => handleDeleteBtn(row.id)}
-                >
-                  {rowData.delete}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
 
   return (
     <div className="card">
-      <h1>Card Editor</h1>
-      {TABLE}
-      <form onSubmit={handleAddCard}>
-        <input
-          name="front"
-          type="text"
-          placeholder="Front of Card"
-          onChange={handleValChange}
-        />
-        <input
-          name="back"
-          type="text"
-          placeholder="Back of Card"
-          onChange={handleValChange}
-        />
-        <button onClick={handleAddCard}>Add Card</button>
+      <h2>Card Editor</h2>
+      <form onSubmit={handleEditFormSubmit}>
+        <table>
+          <thead>
+            <tr key={nanoid}>
+              <th>Front</th>
+              <th>Back</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cards.map((card, id) => (
+              <Fragment>
+                {editRowId === id ? (
+                  <EditCard
+                    editFormData={editFormData}
+                    handleEditFormChange={handleEditFormChange}
+                    handleCancelEdit={handleCancelEdit}
+                  />
+                ) : (
+                  <ReadOnlyCard
+                    card={card}
+                    removeCard={removeCard}
+                    id={id}
+                    handleEditClick={handleEditClick}
+                  />
+                )}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
       </form>
+      <div>
+        <input
+          type="text"
+          name="front"
+          onChange={handleChange}
+          value={front}
+          placeholder="Front of card"
+        />
+        <input
+          type="text"
+          name="back"
+          onChange={handleChange}
+          value={back}
+          placeholder="Back of card"
+        />
+        <button onClick={createCard}>Add Card</button>
+      </div>
       <hr />
-      <button onClick={click}>Go to Viewer</button>
+      <button onClick={switchMode}>Go to Viewer</button>
     </div>
   );
 }
-/* 
-using an extra edit component
-{row.map((rowData)=>(
-    <EditCard row={rowData} handleDeleteBtn={handleDeleteBtn}/>
-))}
-*/
