@@ -30,6 +30,7 @@ function App() {
     const idx = cards.findIndex(cards => cards.id === editRowId);
     newCard[idx] = editedCard;
 
+    console.log(newCard);
     setCards(newCard);
   };
 

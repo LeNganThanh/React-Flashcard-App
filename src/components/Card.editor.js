@@ -34,7 +34,9 @@ export default function CardEditor({
 
   //adding the data
   const createCard = () => {
+    const newId = cards.length;
     addCard({
+      id: newId,
       front,
       back,
     });
@@ -67,6 +69,7 @@ export default function CardEditor({
   const handleEditFormSubmit = e => {
     e.preventDefault();
     const editedCard = {
+      id: editRowId,
       front: editFormData.front,
       back: editFormData.back,
     };
